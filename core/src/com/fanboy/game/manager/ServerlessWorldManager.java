@@ -9,11 +9,11 @@ import com.fanboy.network.message.GameStateMessage;
 import com.fanboy.network.message.PlayerNamesMessage;
 
 public class ServerlessWorldManager extends WorldManager {
-    public final LevelLoader loader;
+    public final LevelReaderAndEntitySpawner loader;
 
     public ServerlessWorldManager(Toaster services) {
         super();
-        loader = new LevelLoader("maps/retro.txt", services, this);
+        loader = new LevelReaderAndEntitySpawner("maps/retro.txt", services, this);
     }
 
     @Override

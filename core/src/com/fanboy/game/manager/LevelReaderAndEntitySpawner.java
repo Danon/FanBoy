@@ -5,7 +5,7 @@ import com.fanboy.Toaster;
 
 import static java.lang.Float.parseFloat;
 
-public class LevelLoader {
+public class LevelReaderAndEntitySpawner {
     private final String[] level;
     private final WaveSpawnListener listener;
     private final Toaster toaster;
@@ -14,7 +14,7 @@ public class LevelLoader {
     private float nextTime = 0;
     private int line = 0;
 
-    LevelLoader(String file, Toaster toaster, WaveSpawnListener listener) {
+    LevelReaderAndEntitySpawner(String file, Toaster toaster, WaveSpawnListener listener) {
         this.level = Gdx.files.internal(file).readString().split("\n");
         this.toaster = toaster;
         this.listener = listener;
