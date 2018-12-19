@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.fanboy.entity.ServerEntity;
 import com.fanboy.renderer.world.WorldRenderer;
 
-import static com.fanboy.game.manager.physics.CollisionType.ALL;
-import static com.fanboy.game.manager.physics.CollisionType.NONE;
+import static com.fanboy.game.manager.physics.CollisionGroup.ALL;
+import static com.fanboy.game.manager.physics.CollisionGroup.NONE;
 
 public class Body {
     public final Rectangle rectangle;
@@ -18,7 +18,7 @@ public class Body {
     private boolean onGround = false;
     public boolean toDestroy = false;
 
-    public CollisionType collisionType = ALL;
+    public CollisionGroup collisionGroup = ALL;
     private final Vector2 velocity = new Vector2(0, 0);
     private final Vector2 temp1 = new Vector2();
     private final Vector2 temp2 = new Vector2();
@@ -131,12 +131,12 @@ public class Body {
                 || body == this
                 || body.toDestroy
                 || dupaCos(body)
-                || body.collisionType == NONE
-                || collisionType == NONE && !body.isStatic();
+                || body.collisionGroup == NONE
+                || collisionGroup == NONE && !body.isStatic();
     }
 
     private boolean dupaCos(Body body) {
-        return body.collisionType != ALL && (body.collisionType == collisionType);
+        return body.collisionGroup != ALL && (body.collisionGroup == collisionGroup);
     }
 
     private void calculateVelocity(float delta) {

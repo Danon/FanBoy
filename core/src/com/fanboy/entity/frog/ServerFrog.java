@@ -9,7 +9,7 @@ import com.fanboy.game.Utils;
 import com.fanboy.game.manager.WorldBodyUtils;
 import com.fanboy.game.manager.physics.Body;
 import com.fanboy.game.manager.physics.BodyType;
-import com.fanboy.game.manager.physics.CollisionType;
+import com.fanboy.game.manager.physics.CollisionGroup;
 import com.fanboy.network.message.EntityState;
 
 public class ServerFrog extends ServerEntity implements EnemyCategory, LivingCategory {
@@ -27,7 +27,7 @@ public class ServerFrog extends ServerEntity implements EnemyCategory, LivingCat
     @Override
     protected Body createBody(Vector2 position, WorldBodyUtils world) {
         Body body = world.createBody(this, WIDTH, HEIGHT - Y_OFFSET * 2, position, BodyType.Static);
-        body.collisionType = CollisionType.NONE;
+        body.collisionGroup = CollisionGroup.NONE;
         return body;
     }
 
@@ -36,7 +36,7 @@ public class ServerFrog extends ServerEntity implements EnemyCategory, LivingCat
         if (spawnTime > 0) {
             spawnTime += delta;
             if (spawnTime > 4) {
-                body.collisionType = CollisionType.ENEMY;
+                body.collisionGroup = CollisionGroup.ENEMY;
                 body.setBodyType(BodyType.Dynamic);
                 spawnTime = -1f;
             }

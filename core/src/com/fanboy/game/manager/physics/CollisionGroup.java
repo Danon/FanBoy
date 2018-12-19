@@ -1,5 +1,5 @@
 package com.fanboy.game.manager.physics;
 
-public enum CollisionType {
+public enum CollisionGroup {
     ALL, ENEMY, STATIC, NONE, WEAPON
 }
