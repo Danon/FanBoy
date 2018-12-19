@@ -43,25 +43,9 @@ class CollisionProcessor {
         }
         processWeapons(body1, body2);
         processWeapons(body2, body1);
-
     }
 
-    static void touchLeft(Body body1, Body body2) {
-        if (body1.getUserData() instanceof EnemyCategory) {
-            if (body2.getUserData() instanceof ServerPlayer) {
-                ((ServerPlayer) body2.getUserData()).kill();
-            }
-        } else if (body1.getUserData() instanceof ServerPlayer) {
-            if (body2.getUserData() instanceof EnemyCategory) {
-                ((ServerPlayer) body1.getUserData()).kill();
-            }
-        }
-        processWeapons(body1, body2);
-        processWeapons(body2, body1);
-
-    }
-
-    static void touchRight(Body body1, Body body2) {
+    static void touchLeftAndRight(Body body1, Body body2) {
         if (body1.getUserData() instanceof EnemyCategory) {
             if (body2.getUserData() instanceof ServerPlayer) {
                 ((ServerPlayer) body2.getUserData()).kill();

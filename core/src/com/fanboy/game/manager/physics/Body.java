@@ -68,8 +68,6 @@ public class Body {
     }
 
     public void update(float delta) {
-        float xOffset = 0;
-
         if (toDestroy) {
             return;
         }
@@ -78,12 +76,8 @@ public class Body {
         onGround = false;
         calculateVelocity(delta);
 
-        if (rectangle.x + rectangle.width > WorldRenderer.VIEWPORT_WIDTH && velocity.x > 0) {
-            xOffset = -WorldRenderer.VIEWPORT_WIDTH;
-        } else if (rectangle.x < 0 && velocity.x < 0) {
-            xOffset = WorldRenderer.VIEWPORT_WIDTH;
-        }
-        rectangle.x += xOffset;
+        float offsetXTranslation = getOffsetXTranslationIfCrossedViewport();
+        rectangle.x += offsetXTranslation;
         // Update position
         rectangle.getPosition(temp1);
         temp1.add(temp2);
@@ -93,49 +87,47 @@ public class Body {
 
         if (Math.abs(velocity.y) > 5) {
             rectangle.setPosition(rectangle.x, temp1.y);
-            for (Body body : world.getBodies()) {
-                if (dupa(body)) {
-                    continue;
-                }
-                if (body.rectangle.overlaps(rectangle)) {
-                    solveVerticalCollision(body, temp1);
-                }
-            }
+            world.getBodies().stream()
+                    .filter(body -> !shouldNotCollideWith(body))
+                    .filter(body -> body.rectangle.overlaps(rectangle))
+                    .forEach(body -> solveVerticalCollision(body, temp1));
         }
         rectangle.setPosition(temp1.x, rectangle.y);
-        for (Body body : world.getBodies()) {
-            if (dupa(body)) {
-                continue;
-            }
-            if (body.rectangle.overlaps(rectangle)) {
-                solveHorizontalCollision(body, temp1);
-            }
-        }
+        world.getBodies().stream()
+                .filter(body -> !shouldNotCollideWith(body))
+                .filter(body -> body.rectangle.overlaps(rectangle))
+                .forEach(body -> solveHorizontalCollision(body, temp1));
 
         if (Math.abs(velocity.y) <= 5) {
             rectangle.setPosition(rectangle.x, temp1.y);
-            for (Body body : world.getBodies()) {
-                if (dupa(body)) {
-                    continue;
-                }
-                if (body.rectangle.overlaps(rectangle)) {
-                    solveVerticalCollision(body, temp1);
-                }
-            }
+            world.getBodies().stream()
+                    .filter(body -> !shouldNotCollideWith(body))
+                    .filter(body -> body.rectangle.overlaps(rectangle))
+                    .forEach(body -> solveVerticalCollision(body, temp1));
         }
-        rectangle.x -= xOffset;
+        rectangle.x -= offsetXTranslation;
     }
 
-    private boolean dupa(Body body) {
+    private float getOffsetXTranslationIfCrossedViewport() {
+        if (rectangle.x + rectangle.width > WorldRenderer.VIEWPORT_WIDTH && velocity.x > 0) {
+            return -WorldRenderer.VIEWPORT_WIDTH;
+        }
+        if (rectangle.x < 0 && velocity.x < 0) {
+            return WorldRenderer.VIEWPORT_WIDTH;
+        }
+        return 0;
+    }
+
+    private boolean shouldNotCollideWith(Body body) {
         return toDestroy
                 || body == this
                 || body.toDestroy
-                || dupaCos(body)
+                || shouldNotCollideByGroup(body)
                 || body.collisionGroup == NONE
                 || collisionGroup == NONE && !body.isStatic();
     }
 
-    private boolean dupaCos(Body body) {
+    private boolean shouldNotCollideByGroup(Body body) {
         return body.collisionGroup != ALL && (body.collisionGroup == collisionGroup);
     }
 
@@ -158,12 +150,12 @@ public class Body {
             float x = body.rectangle.x + body.rectangle.width + 0.01f;
             temp1.x = Math.abs(temp4.x - x) < Math.abs(temp4.x - temp2.x) ? x : temp4.x;
             velocity.x *= -restitutionX;
-            CollisionProcessor.touchLeft(this, body);
+            CollisionProcessor.touchLeftAndRight(this, body);
         } else if (velocity.x > 0) {
             float x = body.rectangle.x - rectangle.width - 0.01f;
             temp1.x = Math.abs(temp4.x - x) < Math.abs(temp4.x - temp2.x) ? x : temp4.x;
             velocity.x *= -restitutionX;
-            CollisionProcessor.touchRight(this, body);
+            CollisionProcessor.touchLeftAndRight(this, body);
         }
         rectangle.setPosition(temp1.x, rectangle.y);
     }
