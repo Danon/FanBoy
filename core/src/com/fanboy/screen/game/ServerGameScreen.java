@@ -6,7 +6,7 @@ import com.fanboy.ScreenChanger;
 import com.fanboy.game.manager.ServerWorldManager;
 import com.fanboy.game.manager.ServerlessWorldManager;
 import com.fanboy.game.manager.WorldManager;
-import com.fanboy.network.NetworkRegisterer;
+import com.fanboy.network.NetworkRegister;
 import com.fanboy.renderer.world.ServerWorldRenderer;
 
 import static com.fanboy.Constants.GAME_TCP_PORT;
@@ -21,7 +21,7 @@ public class ServerGameScreen extends GameScreen {
 
         if (!lonely) {
             server = new Server();
-            NetworkRegisterer.register(server);
+            NetworkRegister.register(server);
             server.start();
             try {
                 server.bind(GAME_TCP_PORT, GAME_UDP_PORT);

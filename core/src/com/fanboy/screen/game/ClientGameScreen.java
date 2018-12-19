@@ -3,7 +3,7 @@ package com.fanboy.screen.game;
 import com.esotericsoftware.kryonet.Client;
 import com.fanboy.ProfilePreferences;
 import com.fanboy.ScreenChanger;
-import com.fanboy.network.NetworkRegisterer;
+import com.fanboy.network.NetworkRegister;
 import com.fanboy.renderer.world.ClientWorldRenderer;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class ClientGameScreen extends GameScreen {
     @Override
     public void loadLevel(String level, String host, ProfilePreferences preferences) {
         Client client = new Client();
-        NetworkRegisterer.register(client);
+        NetworkRegister.register(client);
         client.start();
         try {
             client.connect(TIMEOUT, host, GAME_TCP_PORT, GAME_UDP_PORT);
