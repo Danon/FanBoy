@@ -7,9 +7,9 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.fanboy.category.LivingCategory;
+import com.fanboy.entity.ServerEntity;
 import com.fanboy.entity.bomb.ServerBomb;
 import com.fanboy.entity.bullet.ServerBullet;
-import com.fanboy.entity.ServerEntity;
 import com.fanboy.entity.player.ServerPlayer;
 import com.fanboy.game.manager.physics.Body;
 import com.fanboy.game.manager.physics.BodyType;
@@ -28,7 +28,6 @@ public class WorldBodyUtils {
     public final WorldManager worldManager;
     public final AudioMessage audio;
     private final World world;
-
     final List<ServerEntity> entities = new ArrayList<>();
     private Circle circle = new Circle();
 

@@ -1,7 +1,6 @@
 package com.fanboy.entity;
 
 import com.badlogic.gdx.math.Vector2;
-import com.fanboy.entity.ActorType;
 import com.fanboy.game.manager.WorldBodyUtils;
 import com.fanboy.game.manager.physics.Body;
 import com.fanboy.network.message.EntityState;
