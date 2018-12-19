@@ -27,7 +27,7 @@ public class ServerFrog extends ServerEntity implements EnemyCategory, LivingCat
     @Override
     protected Body createBody(Vector2 position, WorldBodyUtils world) {
         Body body = world.createBody(this, WIDTH, HEIGHT - Y_OFFSET * 2, position, BodyType.Static);
-        body.category = CollisionType.NONE;
+        body.collisionType = CollisionType.NONE;
         return body;
     }
 
@@ -36,7 +36,7 @@ public class ServerFrog extends ServerEntity implements EnemyCategory, LivingCat
         if (spawnTime > 0) {
             spawnTime += delta;
             if (spawnTime > 4) {
-                body.category = CollisionType.ENEMY;
+                body.collisionType = CollisionType.ENEMY;
                 body.setBodyType(BodyType.Dynamic);
                 spawnTime = -1f;
             }

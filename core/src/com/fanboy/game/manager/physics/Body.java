@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.fanboy.entity.ServerEntity;
 import com.fanboy.renderer.world.WorldRenderer;
 
+import static com.fanboy.game.manager.physics.CollisionType.ALL;
+import static com.fanboy.game.manager.physics.CollisionType.NONE;
+
 public class Body {
     public final Rectangle rectangle;
     private final ServerEntity entity;
@@ -15,7 +18,7 @@ public class Body {
     private boolean onGround = false;
     public boolean toDestroy = false;
 
-    public CollisionType category = CollisionType.ALL;
+    public CollisionType collisionType = ALL;
     private final Vector2 velocity = new Vector2(0, 0);
     private final Vector2 temp1 = new Vector2();
     private final Vector2 temp2 = new Vector2();
@@ -91,13 +94,9 @@ public class Body {
         if (Math.abs(velocity.y) > 5) {
             rectangle.setPosition(rectangle.x, temp1.y);
             for (Body body : world.getBodies()) {
-                if (toDestroy ||
-                        body == this ||
-                        body.toDestroy ||
-                        (body.category != CollisionType.ALL && body.category == category) ||
-                        (body.category == CollisionType.NONE) ||
-                        (category == CollisionType.NONE && body.bodyType != BodyType.Static))
+                if (dupa(body)) {
                     continue;
+                }
                 if (body.rectangle.overlaps(rectangle)) {
                     solveVerticalCollision(body, temp1);
                 }
@@ -105,12 +104,7 @@ public class Body {
         }
         rectangle.setPosition(temp1.x, rectangle.y);
         for (Body body : world.getBodies()) {
-            if (toDestroy || body == this || body.toDestroy ||
-                    (body.category != CollisionType.ALL && body.category == category) ||
-                    (body.category == CollisionType.NONE) ||
-                    (category == CollisionType.NONE && !body.isStatic()))
-                continue;
-            if (body == this || body.toDestroy) {
+            if (dupa(body)) {
                 continue;
             }
             if (body.rectangle.overlaps(rectangle)) {
@@ -121,10 +115,7 @@ public class Body {
         if (Math.abs(velocity.y) <= 5) {
             rectangle.setPosition(rectangle.x, temp1.y);
             for (Body body : world.getBodies()) {
-                if (toDestroy || body == this || body.toDestroy ||
-                        (body.category != CollisionType.ALL && body.category == category) ||
-                        body.category == CollisionType.NONE ||
-                        (category == CollisionType.NONE && body.bodyType != BodyType.Static)) {
+                if (dupa(body)) {
                     continue;
                 }
                 if (body.rectangle.overlaps(rectangle)) {
@@ -133,6 +124,19 @@ public class Body {
             }
         }
         rectangle.x -= xOffset;
+    }
+
+    private boolean dupa(Body body) {
+        return toDestroy
+                || body == this
+                || body.toDestroy
+                || dupaCos(body)
+                || body.collisionType == NONE
+                || collisionType == NONE && !body.isStatic();
+    }
+
+    private boolean dupaCos(Body body) {
+        return body.collisionType != ALL && (body.collisionType == collisionType);
     }
 
     private void calculateVelocity(float delta) {

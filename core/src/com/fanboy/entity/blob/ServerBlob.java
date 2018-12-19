@@ -29,7 +29,7 @@ public class ServerBlob extends ServerEntity implements EnemyCategory, LivingCat
         Body body = world.createBody(this, WIDTH, HEIGHT - Y_OFFSET * 2, position, BodyType.Static);
         body.setVelocity(velocity, 0);
         body.setGravityScale(0.75f);
-        body.category = CollisionType.NONE;
+        body.collisionType = CollisionType.NONE;
         return body;
     }
 
@@ -43,7 +43,7 @@ public class ServerBlob extends ServerEntity implements EnemyCategory, LivingCat
         if (spawnTime > 0) {
             spawnTime += delta;
             if (spawnTime > 4) {
-                body.category = CollisionType.ENEMY;
+                body.collisionType = CollisionType.ENEMY;
                 body.setBodyType(BodyType.Dynamic);
                 spawnTime = -1f;
             }

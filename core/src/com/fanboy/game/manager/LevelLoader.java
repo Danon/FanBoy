@@ -62,7 +62,6 @@ public class LevelLoader {
         if (line < level.length) {
             return listener.isUnderpopulated() || currentTime >= nextTime;
         }
-
         return false;
     }
 

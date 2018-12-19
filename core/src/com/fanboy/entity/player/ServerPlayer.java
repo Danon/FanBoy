@@ -103,7 +103,7 @@ public class ServerPlayer extends ServerEntity implements LivingCategory {
                 bullet.body.setVelocity(x * 200, y * 200);
                 reloadTime = 0;
             } else if (controls.throwBomb && totalBombs > 0) {
-                ServerBomb bomb = world.createBomb(position.x + Math.signum(x) * 25, position.y + 10, this);
+                ServerBomb bomb = world.createBomb(position.x + Math.signum(x) * ServerBomb.RADIUS, position.y + 10, this);
                 bomb.body.setVelocity(Math.signum(x) * 100, 100);
                 reloadTime = 0;
                 totalBombs--;
