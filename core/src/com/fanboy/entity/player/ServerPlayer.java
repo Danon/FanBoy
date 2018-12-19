@@ -3,9 +3,9 @@ package com.fanboy.entity.player;
 import com.badlogic.gdx.math.Vector2;
 import com.fanboy.category.LivingCategory;
 import com.fanboy.entity.ActorType;
+import com.fanboy.entity.ServerEntity;
 import com.fanboy.entity.bomb.ServerBomb;
 import com.fanboy.entity.bullet.ServerBullet;
-import com.fanboy.entity.ServerEntity;
 import com.fanboy.game.Utils;
 import com.fanboy.game.manager.WorldBodyUtils;
 import com.fanboy.game.manager.physics.Body;
@@ -20,7 +20,6 @@ public class ServerPlayer extends ServerEntity implements LivingCategory {
     public static final float Y_OFFSET = 1f;
 
     private ControlsMessage currentControls = new ControlsMessage();
-    private boolean markForDispose = false;
     private float reloadTime = 0;
     private Vector2 velocity = new Vector2();
     private float direction = 1;
@@ -64,13 +63,9 @@ public class ServerPlayer extends ServerEntity implements LivingCategory {
             }
         }
 
-        if (markForDispose) {
-            dispose();
-        } else {
-            processPlayer();
-            position.set(body.getPosition());
-            reloadTime += delta;
-        }
+        processPlayer();
+        position.set(body.getPosition());
+        reloadTime += delta;
     }
 
     private void processPlayer() {
