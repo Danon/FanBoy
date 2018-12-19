@@ -44,16 +44,11 @@ public class LevelLoader {
 
         if (entity.contentEquals("fly")) {
             listener.spawnFly(x, y);
-            System.out.println("Spawning fly");
         }
-
         if (entity.contentEquals("blob")) {
-            System.out.println("Spawning blob");
             listener.spawnBlob(x, y, parseFloat(params[2]));
         }
-
         if (entity.contentEquals("frog")) {
-            System.out.println("Spawning frog");
             listener.spawnFrog(x, y, parseFloat(params[2]));
         }
     }

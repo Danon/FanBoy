@@ -27,7 +27,7 @@ public class HUDRenderer {
     public void render(Batch batch, float x, float y, short extra, String name) {
         bomb.setSize(5, 5);
         int totalBombs = (extra >> 1) & 0x7;
-        String score = name + ":" + Integer.toString((extra >> 4));
+        String score = name + ":" + (extra >> 4);
         float startX = x + ((ServerPlayer.WIDTH + 6f) / 2) - (font.getBounds(score).width / 2);
         font.draw(batch, score, startX, y + 35);
         for (int i = 0; i < totalBombs; i++) {

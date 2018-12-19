@@ -27,7 +27,7 @@ public class ScreenShaker {
             float y2 = y + MathUtils.random(-intense, intense);
 
             x = max(min(x2, diversity), -diversity);
-            y = max(min(y2, diversity / 2), -diversity / 2);
+            y = max(min(y2, diversity / 2.0f), -diversity / 2.0f);
 
             resetIfFinished();
         }

@@ -106,7 +106,7 @@ public abstract class WorldRenderer {
 
         for (ClientEntity entity : worldMap.values()) {
             if (entity.destroy && entity instanceof ClientBomb) {
-                this.screenShaker.shake();
+                screenShaker.shake();
             }
             if (entity.remove) {
                 worldMap.remove(entity.getId());

@@ -33,10 +33,12 @@ public class World {
     }
 
     private void step(float delta, float iterations) {
+        // Update players first
         bodies.stream()
                 .filter(body -> body.getUserData() instanceof ServerPlayer)
                 .forEach(body -> body.update(delta / iterations));
 
+        // then everything else
         bodies.stream()
                 .filter(Body::isDynamic)
                 .filter(body -> !(body.getUserData() instanceof ServerPlayer))
