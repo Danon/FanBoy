@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.esotericsoftware.kryonet.Client;
 import com.fanboy.*;
+import com.fanboy.control.InputControlState;
 import com.fanboy.game.FocusButton;
 import com.fanboy.screen.game.ClientConnectionFailedException;
 import com.fanboy.screen.game.ClientGameScreen;
@@ -103,7 +104,7 @@ public class ClientDiscoveryScreen implements Screen {
 
     private void processInput() {
         currentButton = currentButton.process();
-        if (InputControl.instance.buttonEnter() || markForDispose) {
+        if (InputControlState.instance.buttonEnter() || markForDispose) {
             processButton();
         }
     }

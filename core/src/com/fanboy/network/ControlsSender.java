@@ -1,6 +1,6 @@
 package com.fanboy.network;
 
-import com.fanboy.InputControl;
+import com.fanboy.control.InputControl;
 import com.fanboy.network.message.ControlsMessage;
 import com.fanboy.pool.MessagePool;
 

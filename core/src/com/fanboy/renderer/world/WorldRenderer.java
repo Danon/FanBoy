@@ -9,12 +9,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.fanboy.Constants;
-import com.fanboy.InputControl;
 import com.fanboy.ProfilePreferences;
 import com.fanboy.ScreenChanger;
+import com.fanboy.control.InputControl;
+import com.fanboy.control.InputControlState;
 import com.fanboy.entity.ActorType;
-import com.fanboy.entity.bomb.ClientBomb;
 import com.fanboy.entity.ClientEntity;
+import com.fanboy.entity.bomb.ClientBomb;
 import com.fanboy.network.ControlsSender;
 import com.fanboy.network.StateProcessor;
 import com.fanboy.network.message.ClientDetailsMessage;
@@ -46,7 +47,7 @@ public abstract class WorldRenderer {
     public final SoundPlayer audioPlayer = new SoundPlayer();
     public HUDRenderer hudRenderer = new HUDRenderer();
     private ControlsMessage previousControlMessage;
-    private InputControl controls = new InputControl();
+    private InputControl controls = new InputControlState();
     private final ScreenChanger screenChanger;
 
     public WorldRenderer(ScreenChanger changer) {
@@ -100,7 +101,7 @@ public abstract class WorldRenderer {
         }
 
         nextStateMessage.states.stream()
-                .filter(state -> worldMap.get(state.id) != null)
+                .filter(state -> worldMap.containsKey(state.id))
                 .forEach(state -> worldMap.get(state.id).processState(state, alpha));
 
         for (ClientEntity entity : worldMap.values()) {

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.math.Vector2;
-import com.fanboy.InputControl;
+import com.fanboy.control.InputControlState;
 
 public class FocusButton {
     private FocusButton north, south, east, west;
@@ -56,13 +56,13 @@ public class FocusButton {
     public FocusButton process() {
         FocusButton pressedButton = null;
         if (slackTime > 0.2f) {
-            if (InputControl.instance.axisDown()) {
+            if (InputControlState.instance.axisDown()) {
                 pressedButton = south;
-            } else if (InputControl.instance.axisUp()) {
+            } else if (InputControlState.instance.axisUp()) {
                 pressedButton = north;
-            } else if (InputControl.instance.axisLeft()) {
+            } else if (InputControlState.instance.axisLeft()) {
                 pressedButton = east;
-            } else if (InputControl.instance.axisRight()) {
+            } else if (InputControlState.instance.axisRight()) {
                 pressedButton = west;
             }
             if (pressedButton != null) {
@@ -76,8 +76,10 @@ public class FocusButton {
 
     public boolean isPressed(Vector2 touchVector, BitmapFont font) {
         TextBounds bounds = font.getBounds(text);
-        return (x < touchVector.x) && (touchVector.x < x + bounds.width) &&
-                (y > touchVector.y) && (touchVector.y > y - bounds.height);
+        return (x < touchVector.x)
+                && (touchVector.x < x + bounds.width)
+                && (y > touchVector.y)
+                && (touchVector.y > y - bounds.height);
     }
 
     public String getText() {

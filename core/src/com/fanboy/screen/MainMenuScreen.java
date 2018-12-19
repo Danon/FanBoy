@@ -11,9 +11,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.fanboy.Fonts;
-import com.fanboy.InputControl;
 import com.fanboy.ProfilePreferences;
 import com.fanboy.ScreenChanger;
+import com.fanboy.control.InputControlState;
 import com.fanboy.game.FocusButton;
 import com.fanboy.pool.AssetLoader;
 import com.fanboy.util.AnimatedValue;
@@ -101,7 +101,7 @@ public class MainMenuScreen implements Screen {
             indicatorTop.setValue(newCurrentButton.getY(), 0.25);
             currentButton = newCurrentButton;
         }
-        if (InputControl.instance.buttonEnter()) {
+        if (InputControlState.instance.buttonEnter()) {
             processButton();
         }
     }
