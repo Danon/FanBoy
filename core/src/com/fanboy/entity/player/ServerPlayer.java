@@ -85,7 +85,7 @@ public class ServerPlayer extends ServerEntity implements LivingCategory {
 
         float x = controls.right ? 1 : (controls.left ? -1 : Math.signum(directionX) * 0.01f);
         float y = controls.up ? 1 : (controls.down ? -1 : 0);
-        if (Math.abs(x) < 0.02f && y == 0) {
+        if (Math.abs(x) < 0.02f && y == 0 || (controls.left == controls.right)) {
             x = direction;
         } else {
             direction = Math.signum(x);
@@ -110,19 +110,24 @@ public class ServerPlayer extends ServerEntity implements LivingCategory {
             }
         }
 
-        if (controls.right) {
-            velocity.x = 100f;
-        } else if (controls.left) {
-            velocity.x = -100f;
-        } else {
-            velocity.x = 0;
-        }
-
+        setVectorByControls(velocity, controls);
         body.setVelocity(velocity);
 
         if (controls.up && body.isOnGround()) {
             body.applyLinearImpulse(0, 290f);
             world.audio.jump();
+        }
+    }
+
+    private void setVectorByControls(Vector2 velocity, ControlsMessage controls) {
+        if (controls.right && controls.left) {
+            velocity.x = 0;
+        } else if (controls.right) {
+            velocity.x = 100f;
+        } else if (controls.left) {
+            velocity.x = -100f;
+        } else {
+            velocity.x = 0;
         }
     }
 
