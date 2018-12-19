@@ -12,8 +12,9 @@ class CollisionProcessor {
         if (body1.getUserData() instanceof ServerPlayer) {
             if (body2.getUserData() instanceof LivingCategory) {
                 body1.setVelocity(body1.getVelocity().x, 40);
-                if (((LivingCategory) body2.getUserData()).kill())
+                if (((LivingCategory) body2.getUserData()).kill()) {
                     body1.getUserData().addKill();
+                }
             }
         } else if (body1.getUserData() instanceof EnemyCategory) {
             if (body2.getUserData() instanceof ServerPlayer) {
@@ -27,8 +28,9 @@ class CollisionProcessor {
     static void jumpedOn(Body body1, Body body2) {
         if (body1.getUserData() instanceof EnemyCategory) {
             if (body2.getUserData() instanceof ServerPlayer) {
-                if (((LivingCategory) body1.getUserData()).kill())
+                if (((LivingCategory) body1.getUserData()).kill()) {
                     body2.getUserData().addKill();
+                }
                 body2.setVelocity(body1.getVelocity().x, 40);
             }
         } else if (body1.getUserData() instanceof ServerPlayer) {

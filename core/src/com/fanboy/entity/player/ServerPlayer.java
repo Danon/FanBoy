@@ -137,16 +137,20 @@ public class ServerPlayer extends ServerEntity implements LivingCategory {
 
     @Override
     public boolean kill() {
-        if (spawnTime < 0) {
-            world.audio.hurt();
-            Vector2 position = body.getPosition();
-            position.set(respawnPosition);
-            body.setTransform(position);
-            spawnTime = 0.1f;
-            totalBombs = 3;
-            return true;
+        if (spawnTime >= 0) {
+            return false;
         }
-        return false;
+        world.audio.hurt();
+        respawnPlayer();
+        return true;
+    }
+
+    private void respawnPlayer() {
+        Vector2 position = body.getPosition();
+        position.set(respawnPosition);
+        body.setTransform(position);
+        spawnTime = 0.1f;
+        totalBombs = 3;
     }
 
     @Override
