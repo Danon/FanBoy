@@ -16,7 +16,7 @@ import com.fanboy.control.InputControlState;
 import com.fanboy.entity.ActorType;
 import com.fanboy.entity.ClientEntity;
 import com.fanboy.entity.bomb.ClientBomb;
-import com.fanboy.network.ControlsSender;
+import com.fanboy.network.ControlsMessageFactory;
 import com.fanboy.network.StateProcessor;
 import com.fanboy.network.message.ClientDetailsMessage;
 import com.fanboy.network.message.ControlsMessage;
@@ -36,7 +36,7 @@ public abstract class WorldRenderer {
     private FitViewport viewport;
     protected TiledMap map;
     protected SpriteBatch batch = new SpriteBatch();
-    private ControlsSender controlsSender = new ControlsSender();
+    private ControlsMessageFactory controlsMessageFactory = new ControlsMessageFactory();
     public final StateProcessor stateProcessor;
     private final ConcurrentHashMap<Short, ClientEntity> worldMap = new ConcurrentHashMap<>();
     protected long previousTime;
@@ -118,7 +118,7 @@ public abstract class WorldRenderer {
     }
 
     private void processControls() {
-        ControlsMessage message = controlsSender.controlMessage(controls);
+        ControlsMessage message = controlsMessageFactory.fromInputControl(controls);
 
         if (!message.hasEqualValues(previousControlMessage)) {
             onControlsChange(message);
