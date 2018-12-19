@@ -13,6 +13,7 @@ import com.fanboy.network.message.ControlsMessage;
 import com.fanboy.network.message.EntityState;
 
 import static com.fanboy.game.manager.physics.BodyType.Dynamic;
+import static java.lang.Math.max;
 
 public class ServerPlayer extends ServerEntity implements LivingCategory {
     public static final float WIDTH = 12;
@@ -126,9 +127,7 @@ public class ServerPlayer extends ServerEntity implements LivingCategory {
     }
 
     private void capFallingVelocity() {
-        if (velocity.y < -200f) {
-            velocity.y = -200f;
-        }
+        velocity.y = max(velocity.y, -450f);
     }
 
     public void setCurrentControls(ControlsMessage controls) {
