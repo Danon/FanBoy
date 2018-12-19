@@ -1,5 +1,6 @@
 package com.fanboy.entity;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -13,7 +14,7 @@ public abstract class ClientEntity {
     private final short id;
     protected final Vector2 position;
     private final Vector2 previousPosition;
-    protected WorldRenderer renderer;
+    protected final WorldRenderer renderer;
 
     protected float angle;
     public boolean destroy = false;
@@ -39,15 +40,15 @@ public abstract class ClientEntity {
     public void processState(EntityState nextState, float alpha) {
         previousPosition.set(position);
         if (position.x - nextState.x > 20) {
-            position.x -= VIEWPORT_WIDTH / 10;
+            position.x -= VIEWPORT_WIDTH / 10.0f;
         } else if (position.x - nextState.x < -20) {
-            position.x += VIEWPORT_WIDTH / 10;
+            position.x += VIEWPORT_WIDTH / 10.0f;
         }
 
         if (position.y - nextState.y > 20) {
-            position.y -= VIEWPORT_HEIGHT / 10;
+            position.y -= VIEWPORT_HEIGHT / 10.0f;
         } else if (position.y - nextState.y < -20) {
-            position.y += VIEWPORT_HEIGHT / 10;
+            position.y += VIEWPORT_HEIGHT / 10.0f;
         }
 
         tempVector.set(nextState.x, nextState.y);
@@ -63,7 +64,7 @@ public abstract class ClientEntity {
         extra = nextState.extra;
     }
 
-    protected void drawAll(Sprite sprite, SpriteBatch batch, float x, float y) {
+    protected void drawAll(Sprite sprite, Batch batch, float x, float y) {
         sprite.setPosition(x, y);
         sprite.draw(batch);
         if (x > VIEWPORT_WIDTH / 2) {
